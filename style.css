@@ -1,0 +1,107 @@
+body {
+    margin: 20px;
+    font-family: sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .form-container > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="date"],
+  input[type="text"],
+  input[type="number"] {
+    padding: 5px;
+    width: 150px;
+    margin-bottom: 10px;
+  }
+  
+  button#addButton {
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin: 0 auto 20px;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  
+  .total-container {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* 例: フォームやテーブルの余白を微調整したい場合 */
+
+#expenseForm .form-control {
+    font-size: 1rem;
+  }
+  
+  #expenseTable th, #expenseTable td {
+    vertical-align: middle;
+    text-align: left;
+  }
+  
+  /* スマホ画面でのカードデザインを微調整 */
+  @media (max-width: 576px) {
+    .card {
+      margin: 10px;
+    }
+  }
+  /* カードやテーブルの背景色を調整 */
+.card {
+    border: 1px solid #444;
+  }
+  
+  .table {
+    border: 1px solid #444;
+  }
+  
+  /* テーブルヘッダーをより目立たせる */
+  .table-secondary {
+    background-color: #666 !important;
+    color: #fff !important;
+  }
+  
+  /* ボタンのホバー効果 */
+  .btn-outline-light:hover {
+    background-color: #ccc;
+    color: #000;
+  }
+  

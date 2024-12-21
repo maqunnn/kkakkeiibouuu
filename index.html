@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>必死家計簿</title>
+  <title>カテゴリ別支出割合</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
     rel="stylesheet"
@@ -13,7 +13,7 @@
 <body class="bg-secondary text-light">
   <nav class="navbar navbar-dark bg-dark mb-3">
     <div class="container-fluid">
-      <span class="navbar-brand mb-0 h1">家計簿頑張れ</span>
+      <span class="navbar-brand mb-0 h1">禍計墓</span>
     </div>
   </nav>
 
@@ -42,7 +42,7 @@
               type="text"
               class="form-control bg-secondary text-light"
               id="memoInput"
-              placeholder="例: コンビニでコーヒー購入"
+              placeholder="例: 英二、二郎など"
             >
           </div>
           <div class="col-12 col-md-2">
@@ -63,6 +63,14 @@
       </div>
     </div>
 
+    <!-- グラフ表示 -->
+    <div class="card bg-dark text-light mb-3">
+      <div class="card-header">カテゴリ別支出割合</div>
+      <div class="card-body">
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+
     <!-- 記録一覧 -->
     <div class="table-responsive mb-3">
       <table class="table table-bordered align-middle table-dark" id="expenseTable">
@@ -80,23 +88,15 @@
         </tbody>
       </table>
     </div>
-
-    <!-- 合計金額表示 -->
-    <div class="d-flex justify-content-end mb-3">
-      <div>
-        <span class="me-2">合計:</span>
-        <span id="totalAmount" class="fs-5 fw-bold text-light">0</span>
-        <span>円</span>
-      </div>
-    </div>
   </div>
 
-  <!-- フッター -->
   <footer class="footer mt-auto bg-dark text-light text-center py-2">
-    <div>© 2024 家計簿アプリ</div>
+    <div>© 必死に貯金しろリ</div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- メインスクリプト -->
   <script src="script.js"></script>
 </body>
 </html>

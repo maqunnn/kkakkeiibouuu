@@ -124,3 +124,115 @@ function deleteExpense(id) {
 function saveData() {
   localStorage.setItem('expensesData', JSON.stringify(expenses));
 }
+
+// Chart.jsのグラフ用変数
+let categoryChart;
+
+// カテゴリごとのデータを集計
+function calculateCategoryData() {
+  const categoryData = {};
+
+  expenses.forEach(expense => {
+    if (!categoryData[expense.category]) {
+      categoryData[expense.category] = 0;
+    }
+    categoryData[expense.category] += expense.amount;
+  });
+
+  return categoryData;
+}
+
+// グラフの更新
+function updateChart() {
+  const categoryData = calculateCategoryData();
+  const labels = Object.keys(categoryData);
+  const data = Object.values(categoryData);
+
+  // グラフがすでに存在する場合は破棄
+  if (categoryChart) {
+    categoryChart.destroy();
+  }
+
+  // 新しいグラフを作成
+  const ctx = document.getElementById('categoryChart').getContext('2d');
+  categoryChart = new Chart(ctx, {
+    type: 'doughnut', // 円グラフ
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: [
+          '#ff6384',
+          '#36a2eb',
+          '#ffce56',
+          '#4bc0c0',
+          '#9966ff',
+          '#ff9f40'
+        ],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const label = context.label || '';
+              const value = context.raw || 0;
+              return `${label}: ${value.toLocaleString()} 円`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// 既存の関数にグラフ更新を追加
+function renderTable() {
+  expenseTableBody.innerHTML = '';
+  let totalAmount = 0;
+
+  expenses.forEach(expense => {
+    const tr = document.createElement('tr');
+
+    const dateTd = document.createElement('td');
+    dateTd.textContent = expense.date;
+    tr.appendChild(dateTd);
+
+    const categoryTd = document.createElement('td');
+    categoryTd.textContent = expense.category;
+    tr.appendChild(categoryTd);
+
+    const memoTd = document.createElement('td');
+    memoTd.textContent = expense.memo;
+    tr.appendChild(memoTd);
+
+    const amountTd = document.createElement('td');
+    amountTd.textContent = expense.amount.toLocaleString();
+    tr.appendChild(amountTd);
+
+    const deleteTd = document.createElement('td');
+    deleteTd.classList.add('text-center');
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = '削除';
+    deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+    deleteButton.addEventListener('click', () => {
+      deleteExpense(expense.id);
+    });
+    deleteTd.appendChild(deleteButton);
+    tr.appendChild(deleteTd);
+
+    expenseTableBody.appendChild(tr);
+    totalAmount += expense.amount;
+  });
+
+  totalAmountElem.textContent = totalAmount.toLocaleString();
+
+  // グラフを更新
+  updateChart();
+}
+

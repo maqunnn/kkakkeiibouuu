@@ -2,101 +2,105 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>必死禍計墓</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-  >
-  <link rel="stylesheet" href="style.css">
+  <title>マナー単語学習</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f4f7f9;
+      color: #333;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px 20px;
+      width: 90%;
+      max-width: 360px;
+      transition: all 0.3s ease;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .word {
+      font-size: 24px;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    .meaning {
+      font-size: 18px;
+      color: #555;
+      display: none;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+    button:active {
+      background: #0056b3;
+    }
+  </style>
 </head>
-<body class="bg-secondary text-light">
-  <nav class="navbar navbar-dark bg-dark mb-3">
-    <div class="container-fluid">
-      <span class="navbar-brand mb-0 h1">家計簿</span>
-    </div>
-  </nav>
+<body>
 
-  <div class="container">
-    <!-- 入力フォーム -->
-    <div class="card mb-3 bg-dark text-light">
-      <div class="card-header">支出を追加</div>
-      <div class="card-body">
-        <form class="row g-3" id="expenseForm">
-          <div class="col-12 col-md-3">
-            <label for="dateInput" class="form-label">日付</label>
-            <input type="date" class="form-control bg-secondary text-light" id="dateInput">
-          </div>
-          <div class="col-12 col-md-3">
-            <label for="categoryInput" class="form-label">カテゴリー</label>
-            <input
-              type="text"
-              class="form-control bg-secondary text-light"
-              id="categoryInput"
-              placeholder="例: 食費, 交通費など"
-            >
-          </div>
-          <div class="col-12 col-md-3">
-            <label for="memoInput" class="form-label">メモ</label>
-            <input
-              type="text"
-              class="form-control bg-secondary text-light"
-              id="memoInput"
-              placeholder="例: 英二、モンスターなど"
-            >
-          </div>
-          <div class="col-12 col-md-2">
-            <label for="amountInput" class="form-label">金額</label>
-            <input
-              type="number"
-              class="form-control bg-secondary text-light"
-              id="amountInput"
-              placeholder="0"
-            >
-          </div>
-          <div class="col-12 col-md-1 d-flex align-items-end">
-            <button type="submit" class="btn btn-outline-light w-100" id="addButton">
-              追加
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- 記録一覧 -->
-    <div class="table-responsive mb-3">
-      <table class="table table-bordered align-middle table-dark" id="expenseTable">
-        <thead class="table-secondary text-dark">
-          <tr>
-            <th>日付</th>
-            <th>カテゴリー</th>
-            <th>メモ</th>
-            <th>金額</th>
-            <th class="text-center">削除</th>
-          </tr>
-        </thead>
-        <tbody id="expenseTableBody">
-          <!-- JavaScriptで行を追加 -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 合計金額表示 -->
-    <div class="d-flex justify-content-end mb-3">
-      <div>
-        <span class="me-2">合計:</span>
-        <span id="totalAmount" class="fs-5 fw-bold text-light">0</span>
-        <span>円</span>
-      </div>
-    </div>
+  <div class="card">
+    <h1>マナー単語学習</h1>
+    <div class="word" id="word">お辞儀</div>
+    <div class="meaning" id="meaning">礼儀として頭を下げる行為</div>
+    <button id="showBtn">意味を表示</button>
+    <button id="nextBtn">次の単語へ</button>
   </div>
 
-  <!-- フッター -->
-  <footer class="footer mt-auto bg-dark text-light text-center py-2">
-    <div>© 頑張れ頑張れ家計</div>
-  </footer>
+  <script>
+    const words = [
+      { word: "お辞儀", meaning: "礼儀として頭を下げる行為" },
+      { word: "敬語", meaning: "相手への敬意を表す丁寧な言葉遣い" },
+      { word: "挨拶", meaning: "出会いや別れの際に交わす礼儀的な言葉" },
+      { word: "席次", meaning: "座席や席順の上下関係" },
+      { word: "手土産", meaning: "訪問時に持参する小さな贈り物" },
+      { word: "名刺交換", meaning: "初対面の際に名刺を交換するビジネスマナー" },
+      { word: "時間厳守", meaning: "約束の時間を守ること" },
+    ];
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+    let index = 0;
+    const wordEl = document.getElementById("word");
+    const meaningEl = document.getElementById("meaning");
+    const showBtn = document.getElementById("showBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function showWord() {
+      const current = words[index];
+      wordEl.textContent = current.word;
+      meaningEl.textContent = current.meaning;
+      meaningEl.style.display = "none";
+    }
+
+    showBtn.addEventListener("click", () => {
+      meaningEl.style.display = "block";
+    });
+
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % words.length;
+      showWord();
+    });
+
+    showWord();
+  </script>
 </body>
 </html>
